@@ -1,0 +1,108 @@
+{% extends 'shop/basic.html' %}
+{% block title%} Ecomwebsite Tracker {% endblock %}
+{% block body %}
+
+<div class="container mt-3">
+    <h2>Ecomwebsite Express Tracker - Enter your Order id and Email address to track your order</h2>
+    <form method="post" id = "trackerForm">
+        {% csrf_token %}
+        <div class="row mb-3">
+            <div class="col-md-6">
+            <label for="inputName" class="form-label">Order Id</label>
+            <input type="text" class="form-control" id="inputName" name="orderId" placeholder="Order ID">
+        </div>
+
+            <div class="col-md-6">
+                <label for="inputEmail4" class="form-label">Email</label>
+                <input type="email" class="form-control" id="inputEmail4" name="email" placeholder="Email">
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Track Order</button>
+    </form>
+
+    <h2 class="mt-4">Your Order Status!</h2>
+    <div id="items">
+        <ul class="list-group mt-3">
+            Enter your Order id & Email and Click Track Order to find details about your order!
+        </ul>
+    </div>
+
+     <h2 class="mt-4">Your Order Details!</h2>
+    <div id="citems">
+        <ul class="list-group mt-3">
+            Enter your Order id & Email and Click Track Order to find details about your order!
+        </ul>
+    </div>
+
+{% if thank %}
+<div class="container mt-4">
+    <h2>✅ Order Successful!</h2>
+    <h4>Your Order ID is: {{ order_id }}</h4>
+</div>
+{% endif %}
+
+{% endblock %}
+{% block js %}
+<script>
+    $('#trackerForm').submit(function(event){
+        event.preventDefault();
+        $('#items ul').empty();
+        $('#citems ul').empty();
+
+        var formData = {
+            'orderId': $('input[name=orderId]').val(),
+            'email': $('input[name=email]').val(),
+            'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()
+        };
+
+        $.ajax({
+            type:'POST',
+            url: '/shop/tracker/',
+            data: formData,
+            dataType: 'json',
+            encode: true
+        })
+            .done(function(data){
+                console.log(data)
+                let updates = data[0];
+                if (updates.length > 0) {
+                    for (let i = 0; i < updates.length; i++) {
+                        let text = updates[i]['text'];
+                        let rawTime = updates[i]['time'];
+                        let dateObj = new Date(rawTime);
+                        let time = dateObj.toLocaleString('en-IN', {
+                            day: '2-digit',
+                            month: 'short',
+                            year: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit'
+                        });
+                        let li = `<li class="list-group-item d-flex justify-content-between">${text}
+                                  <span class="badge bg-primary">${time}</span>
+                                  </li>`;
+                        document.querySelector('#items ul').innerHTML += li;
+                    }
+                }
+                else {
+                    let li = `<li class="list-group-item d-flex justify-content-between">Sorry, We are not able to fetch this order id and email.
+                              Make sure to type correct order id and email.
+                              </span>
+                              </li>`;
+                        document.querySelector('#items ul').innerHTML += li;
+                }
+                let cart = JSON.parse(data[1]);
+                console.log("ORDER CART:", cart);
+                for (let item in cart) {
+                    let name = cart[item].name;
+                    let qty = cart[item].qty;
+                    let li = `<li class="list-group-item d-flex justify-content-between">
+                               ${name}
+                               <span class="badge bg-primary">${qty}</span>
+                               </li>`;
+                    document.querySelector('#citems ul').innerHTML += li;
+                }
+            });
+    });
+</script>
+{% endblock %}

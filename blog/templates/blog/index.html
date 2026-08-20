@@ -1,0 +1,175 @@
+{% extends 'shop/basic.html' %}
+
+{% block title %}Blog | E-com Cart{% endblock %}
+
+{% block css %}
+
+<style>
+    .blog-page {
+        background: #f6f8fb;
+        min-height: 100vh;
+        padding: 45px 0 70px;
+    }
+
+    .blog-header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .blog-header .badge {
+        background: #e8f1ff;
+        color: #0d6efd;
+        padding: 8px 15px;
+        border-radius: 30px;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .blog-header h1 {
+        margin-top: 15px;
+        font-size: 42px;
+        font-weight: 700;
+        color: #172033;
+    }
+
+    .blog-header p {
+        color: #6b7280;
+        max-width: 650px;
+        margin: 10px auto;
+        font-size: 16px;
+    }
+
+    .blog-card {
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 18px;
+        overflow: hidden;
+        height: 100%;
+        transition: all 0.3s ease;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.04);
+    }
+
+    .blog-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 15px 35px rgba(0,0,0,0.10);
+    }
+
+    .blog-image {
+        width: 100%;
+        height: 240px;
+        object-fit: cover;
+        display: block;
+    }
+
+    .blog-content {
+        padding: 25px;
+        display: flex;
+        flex-direction: column;
+        min-height: 250px;
+    }
+
+    .blog-category {
+        color: #0d6efd;
+        font-size: 13px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 10px;
+    }
+
+    .blog-content h2 {
+        font-size: 25px;
+        color: #172033;
+        margin-bottom: 10px;
+        font-weight: 700;
+    }
+
+    .blog-date {
+        font-size: 13px;
+        color: #9ca3af;
+        margin-bottom: 15px;
+    }
+
+    .blog-description {
+        color: #596273;
+        line-height: 1.7;
+        margin-bottom: 20px;
+    }
+
+    .read-btn {
+        margin-top: auto;
+        color: #0d6efd;
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .read-btn:hover {
+        color: #084298;
+    }
+
+    .read-btn span {
+        transition: margin-left 0.2s ease;
+    }
+
+    .read-btn:hover span {
+        margin-left: 5px;
+    }
+</style>
+
+{% endblock %}
+{% block body %}
+
+<section class="blog-page">
+    <div class="container">
+        <div class="blog-header">
+            <span class="badge">
+                E-COM CART BLOG
+            </span>
+            <h1>Ideas, Guides & Technology</h1>
+            <p>
+                Explore useful articles about e-commerce, Django,
+                web development and the technology behind this project.
+            </p>
+        </div>
+
+        <div class="row g-4">
+            {% for item in myposts %}
+            <div class="col-lg-6">
+                <article class="blog-card">
+                    {% if item.thumbnail %}
+                        <img
+                            src="{{ item.thumbnail.url }}"
+                            class="blog-image"
+                            alt="{{ item.title }}"
+                        >
+                    {% endif %}
+
+                    <div class="blog-content">
+                        <div class="blog-category">
+                            {{ item.head0 }}
+                        </div>
+                        <h2>
+                            {{ item.title }}
+                        </h2>
+                        <div class="blog-date">
+                            {{ item.pub_date|date:"M d, Y" }}
+                        </div>
+                        <p class="blog-description">
+                            {{ item.head1 }}
+                        </p>
+                       <a href="{% url 'blogPost' item.post_id %}" class="read-btn">
+                            Continue reading
+                            <span>→</span>
+                        </a>
+                    </div>
+                </article>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center">
+                <h4>No blog posts available.</h4>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

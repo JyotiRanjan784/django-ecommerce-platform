@@ -1,0 +1,60 @@
+{% extends 'shop/basic.html' %}
+{% block title %}
+Search Results - E-com website
+{% endblock %}
+{% block body %}
+
+<div class="container my-4">
+    <h3 class="mb-4">
+        Search Results
+        {% if query %}
+            for "{{ query }}"
+        {% endif %}
+    </h3>
+    {% if allProds %}
+        {% for group in allProds %}
+            <div class="row">
+                {% for product in group.0 %}
+                    <div class="col-md-3 mb-4">
+                        <div class="card h-100">
+                            <img
+                                src="/media/{{ product.image }}"
+                                class="card-img-top"
+                                style="height: 220px; object-fit: contain;"
+                                alt="{{ product.product_name }}"
+                            >
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    {{ product.product_name }}
+                                </h5>
+                                <p class="card-text">
+                                    {{ product.desc|truncatechars:80 }}
+                                </p>
+                                <p>
+                                    <strong>₹{{ product.price }}</strong>
+                                </p>
+                                <a
+                                    href="/shop/products/{{ product.id }}/"
+                                    class="btn btn-primary"
+                                >
+                                    View Product
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    {% else %}
+        {% if query %}
+            <div class="alert alert-warning">
+                No products found for "{{ query }}".
+            </div>
+        {% else %}
+            <div class="alert alert-info">
+                Please enter something in the search box.
+            </div>
+        {% endif %}
+    {% endif %}
+</div>
+{% endblock %}

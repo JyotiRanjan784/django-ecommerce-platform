@@ -1,0 +1,310 @@
+{% extends 'shop/basic.html' %}
+
+{% block title %}
+{{ post.title }} | E-com Cart
+{% endblock %}
+
+{% block css %}
+
+<style>
+    .article-page {
+        background: #f6f8fb;
+        padding: 45px 0 70px;
+        min-height: 100vh;
+    }
+
+    .article-container {
+        max-width: 1150px;
+    }
+
+    .article-card {
+        background: white;
+        border-radius: 18px;
+        overflow: hidden;
+        border: 1px solid #e5e7eb;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.05);
+    }
+
+    .article-hero {
+        width: 100%;
+        height: 420px;
+        object-fit: cover;
+        display: block;
+    }
+
+    .article-content {
+        padding: 40px;
+    }
+
+    .article-category {
+        color: #0d6efd;
+        font-size: 14px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+    }
+
+    .article-title {
+        font-size: 44px;
+        line-height: 1.15;
+        font-weight: 750;
+        color: #172033;
+        margin: 12px 0;
+    }
+
+    .article-date {
+        color: #9ca3af;
+        font-size: 14px;
+        margin-bottom: 35px;
+    }
+
+    .article-section {
+        margin-bottom: 35px;
+    }
+
+    .article-section h2 {
+        font-size: 27px;
+        color: #172033;
+        margin-bottom: 12px;
+        font-weight: 700;
+    }
+
+    .article-section p {
+        color: #4b5563;
+        font-size: 17px;
+        line-height: 1.85;
+    }
+
+    .side-card {
+        background: white;
+        border-radius: 16px;
+        border: 1px solid #e5e7eb;
+        padding: 25px;
+        margin-bottom: 20px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.04);
+    }
+
+    .side-card h4 {
+        font-weight: 700;
+        color: #172033;
+        margin-bottom: 15px;
+    }
+
+    .side-card p {
+        color: #6b7280;
+        line-height: 1.7;
+    }
+
+    .side-card a {
+        text-decoration: none;
+        color: #0d6efd;
+    }
+
+    .comment-section {
+        margin-top: 35px;
+        padding: 30px;
+        background: white;
+        border-radius: 16px;
+        border: 1px solid #e5e7eb;
+    }
+
+    .comment {
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        padding: 18px;
+        margin-top: 15px;
+        background: #fafafa;
+    }
+
+    .comment-name {
+        font-weight: 700;
+        color: #172033;
+    }
+
+    .comment-text {
+        margin: 8px 0;
+        color: #4b5563;
+    }
+
+    .comment-date {
+        color: #9ca3af;
+        font-size: 12px;
+    }
+
+    @media (max-width: 768px) {
+
+        .article-title {
+            font-size: 32px;
+        }
+
+        .article-content {
+            padding: 25px;
+        }
+
+        .article-hero {
+            height: 260px;
+        }
+
+    }
+
+</style>
+
+{% endblock %}
+{% block body %}
+
+<section class="article-page">
+    <div class="container article-container">
+        <div class="row g-4">
+            <!-- MAIN ARTICLE -->
+            <div class="col-lg-8">
+                <article class="article-card">
+                    {% if post.thumbnail %}
+                    <img
+                        src="{{ post.thumbnail.url }}"
+                        class="article-hero"
+                        alt="{{ post.title }}"
+                    >
+                    {% endif %}
+                    <div class="article-content">
+                        <div class="article-category">
+                            {{ post.head0 }}
+                        </div>
+                        <h1 class="article-title">
+                            {{ post.title }}
+                        </h1>
+                        <div class="article-date">
+                            Published on
+                            {{ post.pub_date|date:"F d, Y" }}
+                        </div>
+                        <div class="article-section">
+                            <h2>
+                                {{ post.head0 }}
+                            </h2>
+                            <p>
+                                {{ post.chead0 }}
+                            </p>
+                        </div>
+                        <div class="article-section">
+                            <h2>
+                                {{ post.head1 }}
+                            </h2>
+                            <p>
+                                {{ post.chead1 }}
+                            </p>
+                        </div>
+                        <div class="article-section">
+                            <h2>
+                                {{ post.head2 }}
+                            </h2>
+                            <p>
+                                {{ post.chead2 }}
+                            </p>
+                        </div>
+                    </div>
+                </article>
+                <!-- COMMENTS -->
+                <div class="comment-section">
+                    <h3 class="mb-3">
+                        Comments
+                    </h3>
+                    <form method="post">
+                        {% csrf_token %}
+                        <input
+                            type="text"
+                            name="name"
+                            placeholder="Your name"
+                            required
+                            class="form-control my-2"
+                        >
+                        <textarea
+                            name="text"
+                            placeholder="Share your thoughts..."
+                            required
+                            class="form-control my-2"
+                            rows="4"
+                        ></textarea>
+                        <button
+                            type="submit"
+                            class="btn btn-primary mt-2"
+                        >
+                            Post Comment
+                        </button>
+                    </form>
+                    <hr class="my-4">
+                    {% for comment in comments %}
+                    <div class="comment">
+                        <div class="comment-name">
+                            {{ comment.name }}
+                        </div>
+                        <div class="comment-text">
+                            {{ comment.text }}
+                        </div>
+                        <div class="comment-date">
+                            {{ comment.created_at }}
+                        </div>
+                        <div class="mt-2">
+                            <a
+                                href="{% url 'like_comment' comment.id %}"
+                                class="btn btn-outline-primary btn-sm"
+                            >
+                                👍 Like ({{ comment.likes }})
+                            </a>
+                            <a href="{% url 'delete_comment' comment.id %}"
+                               class="btn btn-danger btn-sm mt-2">
+                                Delete
+                            </a>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <p class="text-muted">
+                        No comments yet. Be the first to comment.
+                    </p>
+                    {% endfor %}
+                </div>
+            </div>
+            <!-- SIDEBAR -->
+            <aside class="col-lg-4">
+                <div class="side-card">
+                    <h4>About E-com Cart</h4>
+                    <p>
+                        E-com Cart is a Django-powered e-commerce project
+                        built to explore product management, shopping carts,
+                        order tracking and web development.
+                    </p>
+                </div>
+                <div class="side-card">
+                    <h4>What you'll find here</h4>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            💻 Django & Web Development
+                        </li>
+                        <li class="mb-2">
+                            🛒 E-commerce Development
+                        </li>
+                        <li class="mb-2">
+                            🐍 Python
+                        </li>
+                        <li class="mb-2">
+                            🤖 Technology & AI
+                        </li>
+                    </ul>
+                </div>
+                <div class="side-card">
+                    <h4>Connect</h4>
+                    <p>
+                        Follow the project and explore more
+                        development content.
+                    </p>
+                    <a href="#">
+                        GitHub →
+                    </a>
+                    <br>
+                    <a href="#">
+                        Instagram →
+                    </a>
+                </div>
+            </aside>
+        </div>
+    </div>
+</section>
+{% endblock %}

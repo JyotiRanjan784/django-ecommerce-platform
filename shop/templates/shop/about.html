@@ -1,0 +1,388 @@
+{% extends 'shop/basic.html' %}
+
+{% block title %}
+About Us | E-com Cart
+{% endblock %}
+
+{% block body %}
+
+<style>
+    .about-hero {
+        background: linear-gradient(135deg, #212529, #343a40);
+        color: white;
+        padding: 70px 30px;
+        border-radius: 0 0 25px 25px;
+        margin-bottom: 50px;
+    }
+
+    .about-hero .tag {
+        display: inline-block;
+        background: #198754;
+        padding: 7px 16px;
+        border-radius: 20px;
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        margin-bottom: 18px;
+    }
+
+    .about-hero h1 {
+        font-size: 48px;
+        font-weight: 700;
+        margin-bottom: 18px;
+    }
+
+    .about-hero p {
+        max-width: 750px;
+        color: #d6d6d6;
+        font-size: 18px;
+        line-height: 1.7;
+    }
+
+    .about-section {
+        margin-bottom: 55px;
+    }
+
+    .about-section h2 {
+        font-size: 32px;
+        font-weight: 700;
+        margin-bottom: 18px;
+    }
+
+    .about-section p {
+        color: #555;
+        line-height: 1.8;
+        font-size: 16px;
+    }
+
+    .story-card {
+        background: #f8f9fa;
+        border-left: 5px solid #198754;
+        padding: 30px;
+        border-radius: 12px;
+    }
+
+    .story-card h3 {
+        font-weight: 700;
+        margin-bottom: 15px;
+    }
+
+    .feature-card {
+        height: 100%;
+        padding: 30px 25px;
+        background: #fff;
+        border: 1px solid #e5e5e5;
+        border-radius: 15px;
+        transition: 0.25s ease;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    }
+
+    .feature-icon {
+        width: 55px;
+        height: 55px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #e9f7ef;
+        color: #198754;
+        border-radius: 12px;
+        font-size: 25px;
+        margin-bottom: 20px;
+    }
+
+    .feature-card h4 {
+        font-weight: 600;
+        margin-bottom: 12px;
+    }
+
+    .feature-card p {
+        margin-bottom: 0;
+        color: #666;
+    }
+
+    .stats {
+        background: #f8f9fa;
+        border-radius: 18px;
+        padding: 35px 20px;
+    }
+
+    .stat h3 {
+        color: #198754;
+        font-size: 32px;
+        font-weight: 700;
+        margin-bottom: 5px;
+    }
+
+    .stat p {
+        margin: 0;
+        color: #666;
+    }
+
+    .cta {
+        background: #212529;
+        color: white;
+        padding: 45px 25px;
+        border-radius: 20px;
+        text-align: center;
+        margin: 55px 0;
+    }
+
+    .cta h2 {
+        font-weight: 700;
+        margin-bottom: 12px;
+    }
+
+    .cta p {
+        color: #ccc;
+        margin-bottom: 25px;
+    }
+
+    .cta a {
+        display: inline-block;
+        background: #198754;
+        color: white;
+        text-decoration: none;
+        padding: 12px 25px;
+        border-radius: 8px;
+        font-weight: 600;
+    }
+
+    .cta a:hover {
+        background: #157347;
+        color: white;
+    }
+
+    @media (max-width: 768px) {
+        .about-hero {
+            padding: 45px 20px;
+        }
+
+        .about-hero h1 {
+            font-size: 36px;
+        }
+    }
+</style>
+
+<!-- HERO -->
+
+<section class="about-hero">
+
+<div class="container">
+
+    <span class="tag">ABOUT E-COM CART</span>
+
+    <h1>Shopping made simple.</h1>
+
+    <p>
+        E-com Cart is an online shopping platform created to make
+        discovering and buying everyday products simple, convenient
+        and accessible.
+    </p>
+
+</div>
+
+
+</section>
+
+<div class="container">
+
+
+<!-- OUR STORY -->
+
+<section class="about-section">
+
+    <div class="row align-items-center">
+
+        <div class="col-md-6 mb-4 mb-md-0">
+
+            <h2>More than just a shopping website.</h2>
+
+            <p>
+                E-com Cart was built with one simple idea:
+                online shopping should be easy to understand and
+                comfortable to use.
+            </p>
+
+            <p>
+                From browsing products to adding items to your cart
+                and placing an order, our goal is to keep the entire
+                experience straightforward.
+            </p>
+
+        </div>
+
+
+        <div class="col-md-6">
+
+            <div class="story-card">
+
+                <h3>Our approach</h3>
+
+                <p>
+                    We focus on bringing useful products together
+                    with clear information, simple navigation and
+                    an easy shopping experience.
+                </p>
+
+                <p>
+                    Whether you are shopping for yourself, your
+                    home, fitness or everyday needs, E-com Cart
+                    is designed to help you find what you need.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- FEATURES -->
+
+<section class="about-section">
+
+    <div class="text-center mb-4">
+
+        <h2>Why E-com Cart?</h2>
+
+        <p>
+            A few things that define our shopping experience.
+        </p>
+
+    </div>
+
+
+    <div class="row g-4">
+
+        <div class="col-md-4">
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    🛍️
+                </div>
+
+                <h4>Products for Everyday Life</h4>
+
+                <p>
+                    Explore products across different categories,
+                    from fashion and fitness to home and lifestyle.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-md-4">
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    💰
+                </div>
+
+                <h4>Simple & Clear Pricing</h4>
+
+                <p>
+                    Product prices are clearly displayed so you can
+                    make your shopping decisions without confusion.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-md-4">
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    🛒
+                </div>
+
+                <h4>Easy Shopping</h4>
+
+                <p>
+                    Add products to your cart, adjust quantities and
+                    move through the checkout process with ease.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- STATS -->
+
+<section class="about-section">
+
+    <div class="stats">
+
+        <div class="row text-center">
+
+            <div class="col-md-3 col-6 stat">
+
+                <h3>100+</h3>
+                <p>Products</p>
+
+            </div>
+
+            <div class="col-md-3 col-6 stat">
+
+                <h3>10+</h3>
+                <p>Categories</p>
+
+            </div>
+
+            <div class="col-md-3 col-6 stat">
+
+                <h3>24/7</h3>
+                <p>Online Shopping</p>
+
+            </div>
+
+            <div class="col-md-3 col-6 stat">
+
+                <h3>1</h3>
+                <p>Simple Experience</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- CALL TO ACTION -->
+
+<section class="cta">
+
+    <h2>Ready to explore E-com Cart?</h2>
+
+    <p>
+        Browse our products and find something that fits your needs.
+    </p>
+
+    <a href="{% url 'index' %}">
+        Start Shopping
+    </a>
+
+</section>
+
+</div>
+
+{% endblock %}

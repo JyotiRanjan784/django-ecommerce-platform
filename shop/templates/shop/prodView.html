@@ -1,0 +1,65 @@
+{% extends 'shop/basic.html' %}
+
+{% block title%} {{product.product_name}} - E-com website  {% endblock %}
+{% block body %}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="row">
+                <Img src="/media/{{product.image}}" width="233px" height="385px">
+            </div>
+            <div class="mt-3">
+                <button class="btn btn-primary me-2">Buy Now</button>
+                <button class="btn btn-primary">Add to Cart</button>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <h5>{{product.product_name}}</h5>
+            <p><b>Rs. {{product.price}}</b></p>
+            <p>{{product.desc}}</p>
+        </div>
+    </div>
+</div>
+
+
+<script>
+  console.log('working');
+  if(localStorage.getItem('cart') == null){
+    var cart = {};
+  }
+  else{
+    cart = JSON.parse(localStorage.getItem('cart'));
+    document.getElementById('cart').innerHTML = Object.keys(cart).length;
+  }
+
+  $('.cart').click(function(){
+
+    console.log('clicked');
+    var idstr = this.id.toString();
+    console.log(idstr);
+    if (cart[idstr] != undefined) {
+      cart[idstr] = cart[idstr] + 1;
+    }
+    else{
+      cart[idstr] = 1;
+    }
+    console.log(cart);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    document.getElementById('cart').innerHTML = Object.keys(cart).length;
+  });
+
+const popcart = document.getElementById('popcart');
+
+new bootstrap.Popover(popcart, {
+  placement: 'bottom',
+  trigger: 'hover focus',
+  html: true,
+  offset: [0, 10],
+  content: function () {
+    return "<h6>Cart</h6>";
+  }
+});
+</script>
+
+{% endblock %}

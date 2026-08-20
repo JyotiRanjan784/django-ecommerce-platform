@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Payment</title>
+
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+
+<body>
+
+    <h2>Pay Now</h2>
+
+    <p>
+        Amount:
+        ₹{{ amount_rupees|floatformat:0 }}
+    </p>
+
+    <button id="pay-btn">
+        Pay Now
+    </button>
+
+
+    <script>
+
+        document.getElementById("pay-btn").onclick = function () {
+
+            console.log("PAY BUTTON CLICKED");
+
+            var options = {
+
+                "key": "{{ key }}",
+
+                "amount": "{{ amount }}",
+
+                "currency": "INR",
+
+                "name": "My Ecom Store",
+
+                "description": "Ecommerce Order",
+
+                "order_id": "{{ order_id }}",
+
+                "prefill": {
+                    "name": "{{ name }}",
+                    "email": "{{ email }}",
+                    "contact": "{{ phone }}"
+                },
+
+                "theme": {
+                    "color": "#3399cc"
+                },
+
+                "callback_url":
+                    window.location.origin +
+                    "{% url 'payment_success' %}"
+            };
+
+
+            console.log("RAZORPAY OPTIONS:", options);
+
+            var rzp1 = new Razorpay(options);
+
+            console.log("OPENING RAZORPAY");
+
+            rzp1.open();
+        };
+
+    </script>
+
+</body>
+
+</html>
