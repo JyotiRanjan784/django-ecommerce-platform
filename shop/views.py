@@ -43,7 +43,7 @@ def tracker(request):
         if not orderId or not email:
             return JsonResponse([], safe=False)
         try:
-            order = Orders.objects.filter(order_id=orderId, email=email)
+            order = Order.objects.filter(order_id=orderId, email=email)
             if order.exists():
                 updates_qs = OrderUpdate.objects.filter(order_id=orderId)
                 updates = []
@@ -130,7 +130,7 @@ def checkout(request):
         for item in items.values():
             amount += item['qty'] * item['price']
 
-        order = Orders(
+        order = Order(
             items_json=items_json,
             name=name,
             amount=amount,
@@ -139,7 +139,8 @@ def checkout(request):
             city=city,
             state=state,
             zip_code=zip_code,
-            phone=phone
+            phone=phone,
+            user=request.user if request.user.is_authenticated else None,
         )
         order.save()
 
@@ -164,8 +165,8 @@ def payment(request):
         return HttpResponse("Order ID is missing")
 
     try:
-        order = Orders.objects.get(order_id=order_id)
-    except Orders.DoesNotExist:
+        order = Order.objects.get(order_id=order_id)
+    except Order.DoesNotExist:
         return HttpResponse("Order not found")
 
     client = razorpay.Client(
@@ -236,11 +237,11 @@ def payment_success(request):
 
     try:
         # Find our Django order using the Razorpay Order ID
-        order = Orders.objects.get(
+        order = Order.objects.get(
             razorpay_order_id=razorpay_order_id
         )
 
-    except Orders.DoesNotExist:
+    except Order.DoesNotExist:
         return HttpResponse(
             "Payment verification failed: order not found"
         )

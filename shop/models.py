@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Product(models.Model):
@@ -64,6 +65,13 @@ class Order(models.Model):
     )
 
     paid = models.BooleanField(default=False)
+
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True
+    )
 
 class OrderUpdate(models.Model):
     update_id = models.AutoField(primary_key=True)
